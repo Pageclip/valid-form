@@ -11,4 +11,5 @@ export function defaults (obj, defaultObject) {
   for (const k in defaultObject) {
     if (obj[k] === undefined) obj[k] = defaultObject[k]
   }
+  return obj
 }
