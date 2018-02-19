@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>ValidForm Examples Tho</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./style.css">
+  <script type="text/javascript" src="./valid-form.js"></script>
+
+  <style media="screen">
+    form .form-control.invalid {
+      border-color: red;
+    }
+
+    /* Styling the validation errors */
+    form .form-group {
+      position: relative;
+    }
+    form .form-group .validation-error {
+      position: absolute;
+      right: 0;
+      top: 1px;
+      color: red;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Example 1 -->
+
+    <div class="example-form example-form_before">
+      <div class="example-title">Example</div>
+      <form method="post" action="/">
+        <div class="form-group">
+          <label>Your Email</label>
+          <input
+            required
+            class="form-control"
+            type="email"
+            name="email"
+            pattern="[ab]+@.+"
+            data-patternMismatch="Only a and b characters allowed!"
+            placeholder="a@b.com" />
+        </div>
+        <div class="form-group">
+          <label>Favorite Animal</label>
+          <select required class="form-control" name="animal">
+            <option value="">pick one!</option>
+            <option value="cat">Cat</option>
+            <option value="dog">Dog</option>
+            <option value="catdog">Catdog</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>A Story</label>
+          <textarea
+            required
+            class="form-control"
+            name="story"
+            pattern="[ab ]+"
+            data-patternMismatch="Plz only a and b characters!"
+            rows="4"
+            placeholder="Tell me a story!"></textarea>
+        </div>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+    <script>
+      var inputs = document.querySelectorAll('.example-form_before input, .example-form_before select, .example-form_before textarea')
+      inputs.forEach(function (input) {
+        ValidForm(input)
+      })
+    </script>
+
+
+  </div>
+
+</body>
+</html>
