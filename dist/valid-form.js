@@ -22,6 +22,8 @@ exports.clone = clone;
 exports.defaults = defaults;
 exports.insertAfter = insertAfter;
 exports.insertBefore = insertBefore;
+exports.forEach = forEach;
+exports.debounce = debounce;
 function clone(obj) {
   var copy = {};
   for (var attr in obj) {
@@ -51,6 +53,26 @@ function insertAfter(refNode, nodeToInsert) {
 function insertBefore(refNode, nodeToInsert) {
   var parent = refNode.parentNode;
   parent.insertBefore(nodeToInsert, refNode);
+}
+
+function forEach(items, fn) {
+  if (!items) return;
+  if (items.forEach) {
+    items.forEach(fn);
+  } else {
+    for (var i = 0; i < items.length; i++) {
+      fn(items[i], i, items);
+    }
+  }
+}
+
+function debounce(ms, fn) {
+  var timeout = void 0;
+  var debouncedFn = function debouncedFn() {
+    clearTimeout(timeout);
+    timeout = setTimeout(fn, ms);
+  };
+  return debouncedFn;
 }
 
 },{}],3:[function(require,module,exports){
@@ -140,7 +162,6 @@ function handleCustomMessageDisplay(input, options) {
   });
   input.addEventListener('invalid', function (e) {
     e.preventDefault();
-    input.focus();
     // We can also create the error in invalid.
     checkValidity({ insertError: true });
   });
@@ -155,15 +176,46 @@ var defaultOptions = {
 
   // validForm
 
-};function validForm(input, options) {
-  options = (0, _util.defaults)(options, defaultOptions);
-  var _options = options,
-      invalidClass = _options.invalidClass,
-      customMessages = _options.customMessages;
+};function validForm(element, options) {
+  if (!element || !element.nodeName) {
+    throw new Error('First arg to validForm must be a form, input, select, or textarea');
+  }
 
-  toggleInvalidClass(input, invalidClass);
-  handleCustomMessages(input, customMessages);
-  handleCustomMessageDisplay(input, options);
+  var inputs = void 0;
+  var type = element.nodeName.toLowerCase();
+
+  options = (0, _util.defaults)(options, defaultOptions);
+  if (type === 'form') {
+    inputs = element.querySelectorAll('input, select, textarea');
+    focusInvalidInput(element, inputs);
+  } else if (type === 'input' || type === 'select' || type === 'textarea') {
+    inputs = [element];
+  } else {
+    throw new Error('Only form, input, select, or textarea elements are supported');
+  }
+
+  validFormInputs(inputs, options);
+}
+
+function focusInvalidInput(form, inputs) {
+  var focusFirst = (0, _util.debounce)(100, function () {
+    var invalidNode = form.querySelector(':invalid');
+    if (invalidNode) invalidNode.focus();
+  });
+  (0, _util.forEach)(inputs, function (input) {
+    return input.addEventListener('invalid', focusFirst);
+  });
+}
+
+function validFormInputs(inputs, options) {
+  var invalidClass = options.invalidClass,
+      customMessages = options.customMessages;
+
+  (0, _util.forEach)(inputs, function (input) {
+    toggleInvalidClass(input, invalidClass);
+    handleCustomMessages(input, customMessages);
+    handleCustomMessageDisplay(input, options);
+  });
 }
 
 },{"./util":2}]},{},[1]);

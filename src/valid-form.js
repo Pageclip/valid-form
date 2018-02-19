@@ -1,4 +1,4 @@
-import {defaults, insertAfter, insertBefore} from './util'
+import {defaults, forEach, debounce, insertAfter, insertBefore} from './util'
 
 // toggleInvalidClass
 
@@ -88,7 +88,6 @@ export function handleCustomMessageDisplay (input, options) {
   })
   input.addEventListener('invalid', function (e) {
     e.preventDefault()
-    input.focus()
     // We can also create the error in invalid.
     checkValidity({insertError: true})
   })
@@ -104,10 +103,40 @@ const defaultOptions = {
 
 // validForm
 
-export default function validForm (input, options) {
+export default function validForm (element, options) {
+  if (!element || !element.nodeName) {
+    throw new Error('First arg to validForm must be a form, input, select, or textarea')
+  }
+
+  let inputs
+  const type = element.nodeName.toLowerCase()
+
   options = defaults(options, defaultOptions)
+  if (type === 'form') {
+    inputs = element.querySelectorAll('input, select, textarea')
+    focusInvalidInput(element, inputs)
+  } else if (type === 'input' || type === 'select' || type === 'textarea') {
+    inputs = [element]
+  } else {
+    throw new Error('Only form, input, select, or textarea elements are supported')
+  }
+
+  validFormInputs(inputs, options)
+}
+
+function focusInvalidInput (form, inputs) {
+  const focusFirst = debounce(100, () => {
+    const invalidNode = form.querySelector(':invalid')
+    if (invalidNode) invalidNode.focus()
+  })
+  forEach(inputs, (input) => input.addEventListener('invalid', focusFirst))
+}
+
+function validFormInputs (inputs, options) {
   const {invalidClass, customMessages} = options
-  toggleInvalidClass(input, invalidClass)
-  handleCustomMessages(input, customMessages)
-  handleCustomMessageDisplay(input, options)
+  forEach(inputs, function (input) {
+    toggleInvalidClass(input, invalidClass)
+    handleCustomMessages(input, customMessages)
+    handleCustomMessageDisplay(input, options)
+  })
 }
