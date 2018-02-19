@@ -1,0 +1,51 @@
+{
+  "name": "valid-form",
+  "version": "1.0.0",
+  "description": "HTML5 form validation helpers",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test",
+    "clean": "rm -rf dist && mkdir -p dist",
+    "build": "npm run clean && npm run build-web && npm run minify",
+    "build-web": "browserify index.js -o dist/valid-form.js -t [ babelify ]",
+    "minify": "uglifyjs dist/valid-form.js -o dist/valid-form.min.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pageclip/valid-form.git"
+  },
+  "keywords": [
+    "html5",
+    "form",
+    "validation"
+  ],
+  "author": "ogle.ben@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Pageclip/valid-form/issues"
+  },
+  "homepage": "https://github.com/Pageclip/valid-form#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.0.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "babelify": "^8.0.0",
+    "browserify": "^16.1.0",
+    "concurrently": "^3.5.0",
+    "eslint": "^4.7.2",
+    "eslint-plugin-import": "^2.7.0",
+    "standard": "^10.0.3",
+    "standard-own": "^1.0.2",
+    "uglify-js": "^3.3.11",
+    "webpack": "^3.11.0"
+  },
+  "standard-own": {
+    "eslintConfig": {
+      "configFile": "./.eslintrc.js"
+    }
+  }
+}
