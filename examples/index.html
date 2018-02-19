@@ -13,15 +13,17 @@
     }
 
     /* Styling the validation errors */
-    form .form-group {
+    .example-form .form-group {
       position: relative;
     }
-    form .form-group .validation-error {
+    .example-form .form-group .validation-error {
+      color: red;
+      font-size: 14px;
+    }
+    .example-form_before .form-group .validation-error {
       position: absolute;
       right: 0;
       top: 1px;
-      color: red;
-      font-size: 14px;
     }
   </style>
 </head>
@@ -29,7 +31,7 @@
   <div class="container">
 
     <!-- Example 1 -->
-
+    <h2>Default Example</h2>
     <div class="example-form example-form_before">
       <div class="example-title">Example</div>
       <form method="post" action="/">
@@ -67,15 +69,58 @@
         <button type="submit">Submit</button>
       </form>
     </div>
-    <script>
-      var forms = document.querySelectorAll('.example-form_before form')
-      forms.forEach(function (form) {
-        ValidForm(form)
-      })
-    </script>
 
+    <h2>Example With Errors After</h2>
+    <div class="example-form example-form_after">
+      <div class="example-title">Example</div>
+      <form method="post" action="/">
+        <div class="form-group">
+          <label>Your Email</label>
+          <input
+            required
+            class="form-control"
+            type="email"
+            name="email"
+            pattern="[ab]+@.+"
+            data-patternMismatch="Only a and b characters allowed!"
+            placeholder="a@b.com" />
+        </div>
+        <div class="form-group">
+          <label>Favorite Animal</label>
+          <select required class="form-control" name="animal">
+            <option value="">pick one!</option>
+            <option value="cat">Cat</option>
+            <option value="dog">Dog</option>
+            <option value="catdog">Catdog</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>A Story</label>
+          <textarea
+            required
+            class="form-control"
+            name="story"
+            pattern="[ab ]+"
+            data-patternMismatch="Plz only a and b characters!"
+            rows="4"
+            placeholder="Tell me a story!"></textarea>
+        </div>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
 
   </div>
 
+  <script>
+    var forms = document.querySelectorAll('.example-form_before form')
+    forms.forEach(function (form) {
+      ValidForm(form)
+    })
+
+    var forms = document.querySelectorAll('.example-form_after form')
+    forms.forEach(function (form) {
+      ValidForm(form, {errorPlacement: 'after'})
+    })
+  </script>
 </body>
 </html>

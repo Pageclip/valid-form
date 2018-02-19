@@ -16,6 +16,7 @@ html, body {
 .example-form {
   padding: 20px;
   border: 2px solid #ddd;
+  margin-bottom: 40px;
 }
 
 .example-title {
