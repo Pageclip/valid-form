@@ -7,19 +7,10 @@ var _validForm2 = _interopRequireDefault(_validForm);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-if (typeof module === 'undefined') {
-  window.ValidForm = _validForm2.default;
-  ValidForm.toggleInvalidClass = _validForm.toggleInvalidClass;
-  ValidForm.handleCustomMessages = _validForm.handleCustomMessages;
-  ValidForm.handleCustomMessageDisplay = _validForm.handleCustomMessageDisplay;
-} else {
-  module.exports = {
-    'default': _validForm2.default,
-    toggleInvalidClass: _validForm.toggleInvalidClass,
-    handleCustomMessages: _validForm.handleCustomMessages,
-    handleCustomMessageDisplay: _validForm.handleCustomMessageDisplay
-  };
-}
+window.ValidForm = _validForm2.default;
+window.ValidForm.toggleInvalidClass = _validForm.toggleInvalidClass;
+window.ValidForm.handleCustomMessages = _validForm.handleCustomMessages;
+window.ValidForm.handleCustomMessageDisplay = _validForm.handleCustomMessageDisplay;
 
 },{"./src/valid-form":3}],2:[function(require,module,exports){
 "use strict";
@@ -29,6 +20,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.clone = clone;
 exports.defaults = defaults;
+exports.insertAfter = insertAfter;
+exports.insertBefore = insertBefore;
 function clone(obj) {
   var copy = {};
   for (var attr in obj) {
@@ -42,6 +35,22 @@ function defaults(obj, defaultObject) {
   for (var k in defaultObject) {
     if (obj[k] === undefined) obj[k] = defaultObject[k];
   }
+  return obj;
+}
+
+function insertAfter(refNode, nodeToInsert) {
+  var sibling = refNode.nextSibling;
+  if (sibling) {
+    var _parent = refNode.parentNode;
+    _parent.insertBefore(nodeToInsert, sibling);
+  } else {
+    parent.appendChild(nodeToInsert);
+  }
+}
+
+function insertBefore(refNode, nodeToInsert) {
+  var parent = refNode.parentNode;
+  parent.insertBefore(nodeToInsert, refNode);
 }
 
 },{}],3:[function(require,module,exports){
@@ -59,34 +68,38 @@ var _util = require('./util');
 
 // toggleInvalidClass
 
-function toggleInvalidClass(input, invalidClassName) {
+function toggleInvalidClass(input, invalidClass) {
   input.addEventListener('invalid', function () {
-    input.classList.add(invalidClassName);
+    input.classList.add(invalidClass);
   });
 
   input.addEventListener('input', function () {
     if (input.validity.valid) {
-      input.classList.remove(invalidClassName);
+      input.classList.remove(invalidClass);
     }
   });
 }
 
 // handleCustomMessages
 
-function getCustomMessage(type, validity, customMessages) {
+var errorProps = ['badInput', 'patternMismatch', 'rangeOverflow', 'rangeUnderflow', 'stepMismatch', 'tooLong', 'tooShort', 'typeMismatch', 'valueMissing'];
+
+function getCustomMessage(input, customMessages) {
   customMessages = customMessages || {};
-  if (validity.typeMismatch) {
-    return customMessages[type + 'Mismatch'];
-  } else {
-    for (var invalidKey in customMessages) {
-      if (validity[invalidKey]) return customMessages[invalidKey];
+  var localErrorProps = [input.type + 'Mismatch'].concat(errorProps);
+  var validity = input.validity;
+
+  for (var i = 0; i < localErrorProps.length; i++) {
+    var prop = localErrorProps[i];
+    if (validity[prop]) {
+      return customMessages[prop] || input.getAttribute('data-' + prop);
     }
   }
 }
 
 function handleCustomMessages(input, customMessages) {
   function checkValidity() {
-    var message = input.validity.valid ? null : getCustomMessage(input.type, input.validity, customMessages);
+    var message = input.validity.valid ? null : getCustomMessage(input, customMessages);
     input.setCustomValidity(message || '');
   }
   input.addEventListener('input', checkValidity);
@@ -96,25 +109,28 @@ function handleCustomMessages(input, customMessages) {
 // handleCustomMessageDisplay
 
 function handleCustomMessageDisplay(input, options) {
+  var validationErrorClass = options.validationErrorClass,
+      validationErrorParentClass = options.validationErrorParentClass,
+      errorPlacement = options.errorPlacement;
+
+
   function checkValidity(options) {
     var insertError = options.insertError;
-    var validationErrorClass = 'validation-error';
-    var parentErrorClass = 'has-validation-error';
 
-    var parent = input.parentNode;
-    var error = parent.querySelector('.' + validationErrorClass) || document.createElement('div');
+    var parentNode = input.parentNode;
+    var errorNode = parentNode.querySelector('.' + validationErrorClass) || document.createElement('div');
 
     if (!input.validity.valid && input.validationMessage) {
-      error.className = validationErrorClass;
-      error.textContent = input.validationMessage;
+      errorNode.className = validationErrorClass;
+      errorNode.textContent = input.validationMessage;
 
       if (insertError) {
-        parent.insertBefore(error, input);
-        parent.classList.add(parentErrorClass);
+        errorPlacement === 'before' ? (0, _util.insertBefore)(input, errorNode) : (0, _util.insertAfter)(input, errorNode);
+        parentNode.classList.add(validationErrorParentClass);
       }
     } else {
-      parent.classList.remove(parentErrorClass);
-      error.remove();
+      parentNode.classList.remove(validationErrorParentClass);
+      errorNode.remove();
     }
   }
   input.addEventListener('input', function () {
@@ -124,13 +140,16 @@ function handleCustomMessageDisplay(input, options) {
   });
   input.addEventListener('invalid', function (e) {
     e.preventDefault();
+    input.focus();
     // We can also create the error in invalid.
     checkValidity({ insertError: true });
   });
 }
 
 var defaultOptions = {
-  invalidClassName: 'invalid',
+  invalidClass: 'invalid',
+  validationErrorClass: 'validation-error',
+  validationErrorParentClass: 'has-validation-error',
   customMessages: {},
   errorPlacement: 'before'
 
@@ -139,10 +158,10 @@ var defaultOptions = {
 };function validForm(input, options) {
   options = (0, _util.defaults)(options, defaultOptions);
   var _options = options,
-      invalidClassName = _options.invalidClassName,
+      invalidClass = _options.invalidClass,
       customMessages = _options.customMessages;
 
-  toggleInvalidClass(input, invalidClassName);
+  toggleInvalidClass(input, invalidClass);
   handleCustomMessages(input, customMessages);
   handleCustomMessageDisplay(input, options);
 }

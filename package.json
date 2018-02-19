@@ -6,9 +6,8 @@
   "scripts": {
     "test": "npm test",
     "clean": "rm -rf dist && mkdir -p dist",
-    "build": "npm run clean && npm run build-web && npm run minify",
-    "build-web": "browserify index.js -o dist/valid-form.js -t [ babelify ]",
-    "minify": "uglifyjs dist/valid-form.js -o dist/valid-form.min.js"
+    "build": "npm run clean && npm run build-browser && npm run minify",
+    "build-browser": "browserify index-browser.js -o dist/valid-form.js -t [ babelify ]",
   },
   "repository": {
     "type": "git",
