@@ -13,3 +13,18 @@ export function defaults (obj, defaultObject) {
   }
   return obj
 }
+
+export function insertAfter (refNode, nodeToInsert) {
+  const sibling = refNode.nextSibling
+  if (sibling) {
+    const parent = refNode.parentNode
+    parent.insertBefore(nodeToInsert, sibling)
+  } else {
+    parent.appendChild(nodeToInsert)
+  }
+}
+
+export function insertBefore (refNode, nodeToInsert) {
+  const parent = refNode.parentNode
+  parent.insertBefore(nodeToInsert, refNode)
+}
