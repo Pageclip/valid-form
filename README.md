@@ -278,3 +278,12 @@ Shows validation messages in a custom div when there is a validation error.
   * `validationErrorClass` - (default: `'validation-error'`) Class applied to error message `<div>` when there is a validation error,
   * `validationErrorParentClass` - (default: `'has-validation-error'`) Class applied to ,
   * `errorPlacement` - (default: `'before'`) Where to insert the error message node. It can be `'before'` or `'after'`
+
+## Developing
+
+Write code in `src`, yo.
+
+```sh
+npm run examples # run the examples
+npm run build    # build all the js
+```
