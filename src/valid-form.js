@@ -16,13 +16,27 @@ export function toggleInvalidClass (input, invalidClass) {
 
 // handleCustomMessages
 
-function getCustomMessage (type, validity, customMessages) {
+const errorProps = [
+  'badInput',
+  'patternMismatch',
+  'rangeOverflow',
+  'rangeUnderflow',
+  'stepMismatch',
+  'tooLong',
+  'tooShort',
+  'typeMismatch',
+  'valueMissing'
+]
+
+function getCustomMessage (input, customMessages) {
   customMessages = customMessages || {}
-  if (validity.typeMismatch) {
-    return customMessages[`${type}Mismatch`]
-  } else {
-    for (const invalidKey in customMessages) {
-      if (validity[invalidKey]) return customMessages[invalidKey]
+  const localErrorProps = [`${input.type}Mismatch`].concat(errorProps)
+  const validity = input.validity
+
+  for (let i = 0; i < localErrorProps.length; i++) {
+    const prop = localErrorProps[i]
+    if (validity[prop]) {
+      return customMessages[prop] || input.getAttribute(`data-${prop}`)
     }
   }
 }
@@ -31,7 +45,7 @@ export function handleCustomMessages (input, customMessages) {
   function checkValidity () {
     const message = input.validity.valid
       ? null
-      : getCustomMessage(input.type, input.validity, customMessages)
+      : getCustomMessage(input, customMessages)
     input.setCustomValidity(message || '')
   }
   input.addEventListener('input', checkValidity)
