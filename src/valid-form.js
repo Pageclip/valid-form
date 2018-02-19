@@ -1,4 +1,4 @@
-import {defaults} from './util'
+import {defaults, insertAfter, insertBefore} from './util'
 
 // toggleInvalidClass
 
@@ -55,25 +55,30 @@ export function handleCustomMessages (input, customMessages) {
 // handleCustomMessageDisplay
 
 export function handleCustomMessageDisplay (input, options) {
-  function checkValidity (options) {
-    const insertError = options.insertError
-    const validationErrorClass = 'validation-error'
-    const parentErrorClass = 'has-validation-error'
+  const {
+    validationErrorClass,
+    validationErrorParentClass,
+    errorPlacement
+  } = options
 
-    const parent = input.parentNode
-    const error = parent.querySelector(`.${validationErrorClass}`) || document.createElement('div')
+  function checkValidity (options) {
+    const {insertError} = options
+    const parentNode = input.parentNode
+    const errorNode = parentNode.querySelector(`.${validationErrorClass}`) || document.createElement('div')
 
     if (!input.validity.valid && input.validationMessage) {
-      error.className = validationErrorClass
-      error.textContent = input.validationMessage
+      errorNode.className = validationErrorClass
+      errorNode.textContent = input.validationMessage
 
       if (insertError) {
-        parent.insertBefore(error, input)
-        parent.classList.add(parentErrorClass)
+        errorPlacement === 'before'
+          ? insertBefore(input, errorNode)
+          : insertAfter(input, errorNode)
+        parentNode.classList.add(validationErrorParentClass)
       }
     } else {
-      parent.classList.remove(parentErrorClass)
-      error.remove()
+      parentNode.classList.remove(validationErrorParentClass)
+      errorNode.remove()
     }
   }
   input.addEventListener('input', function () {
@@ -83,6 +88,7 @@ export function handleCustomMessageDisplay (input, options) {
   })
   input.addEventListener('invalid', function (e) {
     e.preventDefault()
+    input.focus()
     // We can also create the error in invalid.
     checkValidity({insertError: true})
   })
@@ -90,6 +96,8 @@ export function handleCustomMessageDisplay (input, options) {
 
 const defaultOptions = {
   invalidClass: 'invalid',
+  validationErrorClass: 'validation-error',
+  validationErrorParentClass: 'has-validation-error',
   customMessages: {},
   errorPlacement: 'before'
 }
