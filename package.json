@@ -41,7 +41,7 @@
     "eslint-plugin-import": "^2.7.0",
     "standard": "^10.0.3",
     "standard-own": "^1.0.2",
-    "uglify-js": "^3.3.11",
+    "uglify-js": "^3.3.11"
   },
   "standard-own": {
     "eslintConfig": {
