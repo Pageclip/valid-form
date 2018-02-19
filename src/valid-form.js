@@ -36,7 +36,7 @@ function getCustomMessage (input, customMessages) {
   for (let i = 0; i < localErrorProps.length; i++) {
     const prop = localErrorProps[i]
     if (validity[prop]) {
-      return customMessages[prop] || input.getAttribute(`data-${prop}`)
+      return input.getAttribute(`data-${prop}`) || customMessages[prop]
     }
   }
 }
