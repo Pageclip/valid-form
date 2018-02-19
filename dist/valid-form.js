@@ -114,7 +114,7 @@ function getCustomMessage(input, customMessages) {
   for (var i = 0; i < localErrorProps.length; i++) {
     var prop = localErrorProps[i];
     if (validity[prop]) {
-      return customMessages[prop] || input.getAttribute('data-' + prop);
+      return input.getAttribute('data-' + prop) || customMessages[prop];
     }
   }
 }
