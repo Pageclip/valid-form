@@ -2,14 +2,14 @@ import {defaults} from './util'
 
 // toggleInvalidClass
 
-export function toggleInvalidClass (input, invalidClassName) {
+export function toggleInvalidClass (input, invalidClass) {
   input.addEventListener('invalid', function () {
-    input.classList.add(invalidClassName)
+    input.classList.add(invalidClass)
   })
 
   input.addEventListener('input', function () {
     if (input.validity.valid) {
-      input.classList.remove(invalidClassName)
+      input.classList.remove(invalidClass)
     }
   })
 }
@@ -75,7 +75,7 @@ export function handleCustomMessageDisplay (input, options) {
 }
 
 const defaultOptions = {
-  invalidClassName: 'invalid',
+  invalidClass: 'invalid',
   customMessages: {},
   errorPlacement: 'before'
 }
@@ -84,8 +84,8 @@ const defaultOptions = {
 
 export default function validForm (input, options) {
   options = defaults(options, defaultOptions)
-  const {invalidClassName, customMessages} = options
-  toggleInvalidClass(input, invalidClassName)
+  const {invalidClass, customMessages} = options
+  toggleInvalidClass(input, invalidClass)
   handleCustomMessages(input, customMessages)
   handleCustomMessageDisplay(input, options)
 }
