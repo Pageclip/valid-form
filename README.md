@@ -38,15 +38,17 @@ And usage:
 ### With npm / yarn / webpack
 
 ```sh
-npm install valid-form
+npm install @pageclip/valid-form
 # or
-yarn add valid-form
+yarn add @pageclip/valid-form
 ```
+
+(Apologies for the scoped package. [NPM is annoying](https://github.com/npm/npm/issues/19438))
 
 Then import it like so:
 
 ```js
-import ValidForm from 'valid-form'
+import ValidForm from '@pageclip/valid-form'
 const formElement = document.querySelector('form')
 ValidForm(formElement)
 ```
@@ -58,7 +60,7 @@ import {
   toggleInvalidClass,
   handleCustomMessages,
   handleCustomMessageDisplay
-} from 'valid-form'
+} from '@pageclip/valid-form'
 ```
 
 ## Usage
