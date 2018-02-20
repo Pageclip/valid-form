@@ -14,7 +14,7 @@ What does it look like (with custom styles)?
 
 <img width="448" alt="screen shot 2018-02-19 at 1 49 08 pm" src="https://user-images.githubusercontent.com/69169/36398386-bb53733a-157b-11e8-9ef4-847b959a5a85.png">
 
-[Try it out](http://valid-form.pageclip.co)
+[Try it out &rarr;](http://valid-form.pageclip.co)
 
 ## Installing
 
@@ -64,6 +64,8 @@ import {
 ```
 
 ## Usage
+
+For the tl;dr, check out the example [code](/Pageclip/valid-form/blob/master/index.html), and see it [in action](http://valid-form.pageclip.co).
 
 The main function is `ValidForm()` which you call with a `<form>` element.
 
