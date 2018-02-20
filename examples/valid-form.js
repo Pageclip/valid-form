@@ -1,1 +1,0 @@
-../dist/valid-form.js
