@@ -286,6 +286,7 @@ Shows validation messages in a custom div when there is a validation error.
 Write code in `src`, yo.
 
 ```sh
+npm install
 npm run build # build all the js
 npm run site  # run the example site
 ```
