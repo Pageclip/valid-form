@@ -292,3 +292,7 @@ npm run site  # run the example site
 ```
 
 The site is available at http://localhost:8080.
+
+## License
+
+MIT
