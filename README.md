@@ -1,6 +1,6 @@
 # ValidForm
 
-ValidForm is a thin wrapper on the HTML5 Form Validation features. It is very small at about 200 lines of code (7k, 5.6k compressed), and it has _no dependencies_. Nope, none.
+ValidForm is a thin JavaScript wrapper on the HTML5 Form Validation features. It is very small at about 200 lines of code (7k, 5.6k compressed), and it has _no dependencies_. Nope, none.
 
 For background, check out the [blog post]() that lead to this module.
 
@@ -284,6 +284,8 @@ Shows validation messages in a custom div when there is a validation error.
 Write code in `src`, yo.
 
 ```sh
-npm run examples # run the examples
-npm run build    # build all the js
+npm run build # build all the js
+npm run site  # run the example site
 ```
+
+The site is available at http://localhost:8080.
