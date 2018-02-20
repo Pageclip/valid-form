@@ -1,6 +1,6 @@
 {
   "name": "@pageclip/valid-form",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "HTML5 form validation helpers",
   "main": "index.js",
   "scripts": {
