@@ -1,5 +1,5 @@
 {
-  "name": "valid-form",
+  "name": "validform",
   "version": "1.0.0",
   "description": "HTML5 form validation helpers",
   "main": "index.js",
