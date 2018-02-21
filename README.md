@@ -2,7 +2,7 @@
 
 ValidForm is a thin JavaScript wrapper on the HTML5 Form Validation features. It is very small at about 200 lines of code (7k, 5.6k compressed), and it has _no dependencies_. Nope, none.
 
-For background, check out the [blog post]() that lead to this module.
+For background, check out the [blog post](https://pageclip.co/blog/2018-02-20-you-should-use-html5-form-validation.html) that lead to this module.
 
 The HTML5 form validation features are pretty good, but have a couple warts. ValidForm is a layer on the HTML5 features and attempts to augment them with three things:
 
