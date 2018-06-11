@@ -18,6 +18,7 @@ export function toggleInvalidClass (input, invalidClass) {
 
 const errorProps = [
   'badInput',
+  'customError',
   'patternMismatch',
   'rangeOverflow',
   'rangeUnderflow',
