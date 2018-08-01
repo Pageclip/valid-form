@@ -18,7 +18,6 @@ export function toggleInvalidClass (input, invalidClass) {
 
 const errorProps = [
   'badInput',
-  'customError',
   'patternMismatch',
   'rangeOverflow',
   'rangeUnderflow',
@@ -26,7 +25,8 @@ const errorProps = [
   'tooLong',
   'tooShort',
   'typeMismatch',
-  'valueMissing'
+  'valueMissing',
+  'customError'
 ]
 
 function getCustomMessage (input, customMessages) {
