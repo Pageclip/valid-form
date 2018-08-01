@@ -104,7 +104,7 @@ function toggleInvalidClass(input, invalidClass) {
 
 // handleCustomMessages
 
-var errorProps = ['badInput', 'customError', 'patternMismatch', 'rangeOverflow', 'rangeUnderflow', 'stepMismatch', 'tooLong', 'tooShort', 'typeMismatch', 'valueMissing'];
+var errorProps = ['badInput', 'patternMismatch', 'rangeOverflow', 'rangeUnderflow', 'stepMismatch', 'tooLong', 'tooShort', 'typeMismatch', 'valueMissing', 'customError'];
 
 function getCustomMessage(input, customMessages) {
   customMessages = customMessages || {};
