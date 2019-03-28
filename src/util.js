@@ -16,8 +16,8 @@ export function defaults (obj, defaultObject) {
 
 export function insertAfter (refNode, nodeToInsert) {
   const sibling = refNode.nextSibling
+  const parent = refNode.parentNode
   if (sibling) {
-    const parent = refNode.parentNode
     parent.insertBefore(nodeToInsert, sibling)
   } else {
     parent.appendChild(nodeToInsert)
