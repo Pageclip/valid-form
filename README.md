@@ -65,7 +65,7 @@ import {
 
 ## Usage
 
-For the tl;dr, check out the example [code](/Pageclip/valid-form/blob/master/index.html), and see it [in action](http://valid-form.pageclip.co).
+For the tl;dr, check out the example [code](/index.html), and see it [in action](https://valid-form.pageclip.co).
 
 The main function is `ValidForm()` which you call with a `<form>` element.
 
