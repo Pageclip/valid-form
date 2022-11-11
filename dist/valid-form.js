@@ -42,9 +42,9 @@ function defaults(obj, defaultObject) {
 
 function insertAfter(refNode, nodeToInsert) {
   var sibling = refNode.nextSibling;
+  var parent = refNode.parentNode;
   if (sibling) {
-    var _parent = refNode.parentNode;
-    _parent.insertBefore(nodeToInsert, sibling);
+    parent.insertBefore(nodeToInsert, sibling);
   } else {
     parent.appendChild(nodeToInsert);
   }
